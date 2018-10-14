@@ -30,3 +30,25 @@ res = JSON.parse response.body
 GET https://api.ebay.com/buy/browse/v1/item/{item_id}?
 fieldgroups=string
 
+
+
+
+# authorization = ENV.fetch('AUTHORIZATION')
+
+authorization = EbayAuth.find(1).access_token
+
+
+
+item_id = 183384768608
+url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}"
+
+header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
+
+parametros = {}
+puts parametros
+
+response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+
+
+
+
