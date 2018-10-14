@@ -44,7 +44,7 @@ class EbayAuthsController < ApplicationController
 
       authorization = EbayAuth.find(1).access_token
 
-      item_id = params["item_id"]
+      item_id = params["item_id"].to_i
       url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
       url_base = URI.encode(url_base.strip)
       header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
@@ -57,9 +57,11 @@ class EbayAuthsController < ApplicationController
         res = JSON.parse response.body
         atributos = res["localizedAspects"]
         upc = "no hay UPC"
-        atributos.each do |x|
-          if x["name"] =="UPC"
-            upc = x["value"]
+        if atributos.present? && atributos.size > 0
+          atributos.each do |x|
+            if x["name"] =="UPC"
+              upc = x["value"]
+            end
           end
         end
 
