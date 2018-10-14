@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
 	def ebay_accept
 		puts "entramos en ebay_accept"
 		puts params 
-		code = URI.encode(params["code"])  
+		code = URI.decode(params["code"])  
 		# code = code.gsub("\n", "")
 		puts "el code es"
 		puts code
