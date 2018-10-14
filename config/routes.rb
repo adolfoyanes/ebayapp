@@ -5,4 +5,7 @@ Rails.application.routes.draw do
 
 
     get 'ebay_accept', to: 'welcome#ebay_accept'
+
+    get 'token', to: 'ebay_auth#token'
+    
 end
