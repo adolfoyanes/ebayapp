@@ -1,0 +1,42 @@
+<%= form_with(model: ebay_auth, local: true) do |form| %>
+  <% if ebay_auth.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ebay_auth.errors.count, "error") %> prohibited this ebay_auth from being saved:</h2>
+
+      <ul>
+      <% ebay_auth.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :access_token %>
+    <%= form.text_field :access_token %>
+  </div>
+
+  <div class="field">
+    <%= form.label :refresh_token %>
+    <%= form.text_field :refresh_token %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expiration %>
+    <%= form.datetime_select :expiration %>
+  </div>
+
+  <div class="field">
+    <%= form.label :token_type %>
+    <%= form.text_field :token_type %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

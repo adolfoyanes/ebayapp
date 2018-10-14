@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @ebay_auth.user_id %>
+</p>
+
+<p>
+  <strong>Access token:</strong>
+  <%= @ebay_auth.access_token %>
+</p>
+
+<p>
+  <strong>Refresh token:</strong>
+  <%= @ebay_auth.refresh_token %>
+</p>
+
+<p>
+  <strong>Expiration:</strong>
+  <%= @ebay_auth.expiration %>
+</p>
+
+<p>
+  <strong>Token type:</strong>
+  <%= @ebay_auth.token_type %>
+</p>
+
+<%= link_to 'Edit', edit_ebay_auth_path(@ebay_auth) %> |
+<%= link_to 'Back', ebay_auths_path %>

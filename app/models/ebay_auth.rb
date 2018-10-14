@@ -1,0 +1,2 @@
+class EbayAuth < ApplicationRecord
+end
