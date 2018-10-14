@@ -6,8 +6,8 @@ class WelcomeController < ApplicationController
 	def ebay_accept
 		puts "entramos en ebay_accept"
 		puts params 
-		code = Base64.encode64(params["code"])  
-		code = code.gsub("\n", "")
+		code = Base64.strict_encode64(params["code"])  
+		# code = code.gsub("\n", "")
 		puts "el code es"
 		puts code
 
@@ -17,7 +17,7 @@ class WelcomeController < ApplicationController
 
 
 
-		authorization = Base64.encode64("#{client_id}:#{cert_id}")
+		authorization = Base64.strict_encode64("#{client_id}:#{cert_id}")
 		puts authorization
 		authorization = authorization.gsub("\n", "")
 		puts "el authorization es"
