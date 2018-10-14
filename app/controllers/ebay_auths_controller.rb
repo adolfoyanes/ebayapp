@@ -38,7 +38,7 @@ class EbayAuthsController < ApplicationController
       ## check expiration
       if (Time.now - ebay_auth.updated_at) >= 6600
         ## refresh token
-        EbayAuth.refresh_token(1)
+        EbayAuth.refrescar_token(1)
         ebay_auth = EbayAuth.find(1)
       end
 
