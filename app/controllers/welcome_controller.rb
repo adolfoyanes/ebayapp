@@ -24,7 +24,7 @@ class WelcomeController < ApplicationController
 		url_base = "https://api.ebay.com/identity/v1/oauth2/token"
 
 		header    = {"Content-Type" => "application/x-www-form-urlencoded" ,
-			"Authorization" => "Bearer #{authorization}"}
+			"Authorization" => "Basic #{authorization}"}
 
 		parametros = {"grant_type"=>"authorization_code", "code"=>code, "redirect_uri" => "#{ENV.fetch('RU_NAME')}"}
 		puts parametros
