@@ -5,10 +5,9 @@ class EbayAuth < ApplicationRecord
 		authorization = ENV.fetch('AUTHORIZATION')
 		url_base = "https://api.ebay.com/identity/v1/oauth2/token"
 
-		header    = {"Content-Type" => "application/x-www-form-urlencoded" ,
-			"Authorization" => "Basic #{authorization}"}
+		header    = {"Content-Type" => "application/x-www-form-urlencoded" ,"Authorization" => "Basic #{authorization}"}
 
-		parametros = {"grant_type"=>"refresh_token", "refresh_token" => "#{Base64.strict_encode64(ebay_auth.refresh_token)}"}
+		parametros = {"grant_type"=>"refresh_token", "refresh_token" => "#{ebay_auth.refresh_token}"}
 		puts parametros
 
 		response = HTTParty.post("#{url_base}", :query => parametros, :headers =>header)

@@ -26,6 +26,57 @@ class EbayAuthsController < ApplicationController
     puts params 
   end
 
+  def get_item
+
+    password = ENV.fetch('password')
+
+    salida = []
+
+    if params["password"].present? && params["password"] == password
+
+      ebay_auth = EbayAuth.find(1)
+      ## check expiration
+      if (Time.now - ebay_auth.updated_at) >= 6600
+        ## refresh token
+        EbayAuth.refresh_token(1)
+        ebay_auth = EbayAuth.find(1)
+      end
+
+      authorization = EbayAuth.find(1).access_token
+
+      item_id = params["item_id"]
+      url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
+      url_base = URI.encode(url_base.strip)
+      header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
+
+      parametros = {}
+      puts parametros
+
+      response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+      if response.code == 200 
+        res = JSON.parse response.body
+        atributos = res["localizedAspects"]
+        upc = "no hay UPC"
+        atributos.each do |x|
+          if x["name"] =="UPC"
+            upc = x["value"]
+          end
+        end
+
+        salida << upc
+      else
+        salida << "item no encontrado"
+      end
+    else
+      salida = ["Acceso no autorizado"]
+    end
+
+    respond_to do |format|
+      puts "entro en view customers"
+      format.json { render json: salida }
+    end
+  end
+
   # POST /ebay_auths
   # POST /ebay_auths.json
   def create

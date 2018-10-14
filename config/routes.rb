@@ -7,5 +7,11 @@ Rails.application.routes.draw do
     get 'ebay_accept', to: 'welcome#ebay_accept'
 
     get '/token', to: 'ebay_auths#token'
+
+
+    ### api 
+
+    get '/get_item', to: 'ebay_auths#get_item'
+    
     
 end

@@ -63,9 +63,11 @@ end
 
 
 
+
+
 To do:
 
-1) refrescar el token function 
+
 2) crear api para q en google script se mande el call al ebayapp y devuelva el upc 
 3) crear funcion en google script para q haga el call y guarde el upc 
 4) guardar otros atributos 
