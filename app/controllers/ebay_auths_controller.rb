@@ -73,7 +73,8 @@ class EbayAuthsController < ApplicationController
 
     respond_to do |format|
       puts "entro en get items"
-      format.json { render json: salida.to_json }
+      puts salida
+      format.json { render json: salida }
     end
   end
 
