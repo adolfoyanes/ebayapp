@@ -7,13 +7,17 @@ code = Base64.encode64(params["code"])
 code = code[0..(code.size-2)]              
         
 client_id = ENV.fetch('CLIENT_ID')
-client_id = Base64.encode64(client_id)
-client_id = client_id[0..(client_id.size-2)]
+
+cert_id = ENV.fetch('CERT_ID')
+
+
+authorization = Base64.encode64("#{client_id}:cert_id")
+authorization = authorization[0..(authorization.size-2)]
 
 url_base = "https://api.ebay.com/identity/v1/oauth2/token"
 
 header    = {"Content-Type" => "application/x-www-form-urlencoded" ,
-                     "Authorization" = "Basic #{client_id}"}
+                     "Authorization" = "Basic #{authorization}"}
 
 parametros = {
 				"grant_type"=>"authorization_code", 
