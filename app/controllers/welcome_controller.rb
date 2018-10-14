@@ -14,11 +14,15 @@ class WelcomeController < ApplicationController
 		client_id = ENV.fetch('CLIENT_ID')
 		cert_id = ENV.fetch('CERT_ID')
 
+
+
 		authorization = Base64.encode64("#{client_id}:#{cert_id}")
 		puts authorization
 		authorization = authorization.gsub("\n", "")
 		puts "el authorization es"
 		puts authorization
+
+		authorization = ENV.fetch('AUTHORIZATION')
 
 
 		url_base = "https://api.ebay.com/identity/v1/oauth2/token"
