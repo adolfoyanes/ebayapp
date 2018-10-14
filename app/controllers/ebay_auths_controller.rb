@@ -28,7 +28,7 @@ class EbayAuthsController < ApplicationController
 
   def get_item
 
-    password = ENV.fetch('password')
+    password = ENV.fetch('PASSWORD')
 
     salida = []
 
