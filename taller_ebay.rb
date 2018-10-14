@@ -18,7 +18,7 @@ header    = {"Content-Type" => "application/x-www-form-urlencoded" ,
 parametros = {
 				"grant_type"=>"authorization_code", 
 				"code"=>code, 
-				"redirect_uri" =>"<%= url_for token_path %> "
+				"redirect_uri" =>"<%= url_for token_path %>"
 				}
 
 response = HTTParty.post("#{url_base}", :query => parametros, :headers =>header)

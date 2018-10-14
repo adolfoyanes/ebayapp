@@ -24,11 +24,6 @@ class EbayAuthsController < ApplicationController
   def token
     puts "entramos en token "
     puts params 
-
-    respond_to do |format|
-      format.html { render '200' }
-      format.json { render '200' }
-    end
   end
 
   # POST /ebay_auths
