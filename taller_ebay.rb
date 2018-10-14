@@ -3,18 +3,6 @@ taller_ebay.rb
 
 ### obtener token 
 
-
-HTTP method:   POST
-  URL (Sandbox): https://api.sandbox.ebay.com/identity/v1/oauth2/token
-
-  HTTP headers:
-    Content-Type = 
-    Authorization = Basic <B64-encoded-oauth-credentials>
-
-
-
-
-
 code = Base64.encode64(params["code"])    
 code = code[0..(code.size-2)]              
         
@@ -27,7 +15,11 @@ url_base = "https://api.ebay.com/identity/v1/oauth2/token"
 header    = {"Content-Type" => "application/x-www-form-urlencoded" ,
                      "Authorization" = "Basic #{client_id}"}
 
-parametros = 
+parametros = {
+				"grant_type"=>"authorization_code", 
+				"code"=>code, 
+				"redirect_uri" =>"<%= url_for token_path %> "
+				}
 
 response = HTTParty.post("#{url_base}", :query => parametros, :headers =>header)
 

@@ -28,6 +28,7 @@ class EbayAuthsController < ApplicationController
     respond_to do |format|
       format.html { render '200' }
       format.json { render '200' }
+    end
   end
 
   # POST /ebay_auths
