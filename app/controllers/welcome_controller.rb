@@ -42,15 +42,17 @@ class WelcomeController < ApplicationController
 
 		puts res
 
-  	ebay_auth = EbayAuth.new 
-  	ebay_auth.access_token = Base64.decode64(res["access_token"])
-  	ebay_auth.refresh_token = Base64.decode64(res["refresh_token"])
-  	ebay_auth.token_type = res["token_type"]
-  	if ebay_auth.save 
-  		puts "se guardo bien "
-  	else
-  		puts "no se guardo nada"
-  	end
+		if response.code == 200
+	  	ebay_auth = EbayAuth.new 
+	  	ebay_auth.access_token = Base64.decode64(res["access_token"])
+	  	ebay_auth.refresh_token = Base64.decode64(res["refresh_token"])
+	  	ebay_auth.token_type = res["token_type"]
+	  	if ebay_auth.save 
+	  		puts "se guardo bien "
+	  	else
+	  		puts "no se guardo nada"
+	  	end
+	  end
 
 
 
