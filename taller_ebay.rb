@@ -37,17 +37,39 @@ fieldgroups=string
 
 authorization = EbayAuth.find(1).access_token
 
-
-
-item_id = 183384768608
-url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}"
-
+item_id = 322946328597
+url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
+url_base = URI.encode(url_base.strip)
 header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
 
 parametros = {}
 puts parametros
 
 response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+
+res = JSON.parse response.body
+
+
+atributos = res["localizedAspects"]
+upc = ""
+atributos.each do |x|
+if x["name"] =="UPC"
+upc = x["value"]
+end
+end
+
+
+### refrescar el token 
+
+
+
+To do:
+
+1) refrescar el token function 
+2) crear api para q en google script se mande el call al ebayapp y devuelva el upc 
+3) crear funcion en google script para q haga el call y guarde el upc 
+4) guardar otros atributos 
+
 
 
 
