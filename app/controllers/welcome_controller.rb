@@ -7,6 +7,7 @@ class WelcomeController < ApplicationController
 		puts "entramos en ebay_accept"
 		puts params 
 		code = Base64.encode64(params["code"])  
+		code = code.gsub("\n", "")
 		puts "el code es"
 		puts code
 
