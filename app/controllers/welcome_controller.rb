@@ -24,7 +24,7 @@ class WelcomeController < ApplicationController
 		url_base = "https://api.ebay.com/identity/v1/oauth2/token"
 
 		header    = {"Content-Type" => "application/x-www-form-urlencoded" ,
-			"Authorization" => "Basic #{authorization}"}
+			"Authorization" => "Bearer #{authorization}"}
 
 		parametros = {"grant_type"=>"authorization_code", "code"=>code, "redirect_uri" =>"https://ebayapp.herokuapp.com/token"}
 		puts parametros
@@ -37,14 +37,6 @@ class WelcomeController < ApplicationController
 
 		puts res
 
-		 {
-    "access_token": "v^1.1#i^1#p^3#r^1...XzMjRV4xMjg0",
-    "expires_in": 7200,
-    "refresh_token": "v^1.1#i^1#p^3#r^1...zYjRV4xMjg0",
-    "refresh_token_expires_in": 47304000,
-    "token_type": "User Access Token"
-  }
-
   	ebay_auth = EbayAuth.new 
   	ebay_auth.access_token = Base64.decode64(res["access_token"])
   	ebay_auth.refresh_token = Base64.decode64(res["refresh_token"])
@@ -54,7 +46,7 @@ class WelcomeController < ApplicationController
   	else
   		puts "no se guardo nada"
   	end
-  	
+
 
 
 	end
