@@ -26,7 +26,7 @@ class WelcomeController < ApplicationController
 		header    = {"Content-Type" => "application/x-www-form-urlencoded" ,
 			"Authorization" => "Bearer #{authorization}"}
 
-		parametros = {"grant_type"=>"authorization_code", "code"=>code, "redirect_uri" =>"https://ebayapp.herokuapp.com/token"}
+		parametros = {"grant_type"=>"authorization_code", "code"=>code, "redirect_uri" => "#{ENV.fetch('RU_NAME')}"}
 		puts parametros
 
 		response = HTTParty.post("#{url_base}", :query => parametros, :headers =>header)
