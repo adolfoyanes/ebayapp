@@ -30,7 +30,7 @@ class EbayAuthsController < ApplicationController
 
     password = ENV.fetch('PASSWORD')
 
-    salida = []
+    salida = {}
 
     if params["password"].present? && params["password"] == password
 
@@ -63,12 +63,12 @@ class EbayAuthsController < ApplicationController
           end
         end
 
-        salida << upc
+        salida["UPC"] = upc
       else
-        salida << "item no encontrado"
+        salida["error"] = "item no encontrado"
       end
     else
-      salida = ["Acceso no autorizado"]
+      salida["error"] = "Acceso no autorizado"
     end
 
     respond_to do |format|
