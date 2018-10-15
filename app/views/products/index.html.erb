@@ -1,3 +1,4 @@
+<% if (params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD')) %> 
 <p id="notice"><%= notice %></p>
 
 <h1>Products</h1>
@@ -45,3 +46,9 @@
 <br>
 
 <%= link_to 'New Product', new_product_path %>
+
+<% else %>
+
+Acceso no Autorizado 
+
+<% end %> 

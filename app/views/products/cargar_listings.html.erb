@@ -1,0 +1,33 @@
+
+
+
+<div class="container">
+	<div>
+		<input id="nuevo_url" onkeypress="if (window.event.keyCode == 13) traerData()">
+	</div>
+	<div id="status">
+	</div>
+</div>
+
+
+<script>
+
+
+	function traerData(){
+    console.log("entramos en traerData ")
+    var url = $('#nuevo_url').val();
+    $('#nuevo_url').val('');
+    $.ajax({
+      type:"POST", 
+      url:"<%= url_for traer_data_products_path(:id => 33)%>", 
+      data: {url:url, "authenticity_token": AUTH_TOKEN },
+      dataType: 'json',
+      success:function(result){
+        console.log("listo ")
+        console.log(result)
+      }
+    });
+  };
+
+
+</script>

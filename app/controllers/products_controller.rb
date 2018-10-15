@@ -25,66 +25,75 @@ class ProductsController < ApplicationController
     @products = Product.all.order(id: :asc)
   end
 
+  def cargar_listings
+  end
+
   def traer_data
     puts "entramos en traer_data"
     puts params 
     salida = {}
-    ebay_auth = EbayAuth.find(1)
-    ## check expiration
-    if (Time.now - ebay_auth.updated_at) >= 6600
-      ## refresh token
-      EbayAuth.refrescar_token(1)
+
+    existe = Product.find_by_url(params["url"])
+    if existe.nil?
       ebay_auth = EbayAuth.find(1)
-    end
+      ## check expiration
+      if (Time.now - ebay_auth.updated_at) >= 6600
+        ## refresh token
+        EbayAuth.refrescar_token(1)
+        ebay_auth = EbayAuth.find(1)
+      end
 
-    authorization = EbayAuth.find(1).access_token
+      authorization = EbayAuth.find(1).access_token
 
-    url = params["url"]
-    item_id = url.gsub("https://www.ebay.com/itm/-/", "")
-    item_id = item_id[0..11]
-    url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
-    url_base = URI.encode(url_base.strip)
-    header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
+      url = params["url"]
+      item_id = url.gsub("https://www.ebay.com/itm/-/", "")
+      item_id = item_id[0..11]
+      url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
+      url_base = URI.encode(url_base.strip)
+      header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
 
-    parametros = {}
-    puts parametros
+      parametros = {}
+      puts parametros
 
-    response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
-    if response.code == 200 
-      res = JSON.parse response.body
-      puts res
-      atributos = res["localizedAspects"]
-      upc = "no hay UPC"
-      producto = Product.find(params["product_id"].gsub("product_", ""))
-      producto.name = res["title"]
-      producto.current_price = res["price"]["value"]
-      producto.url = url
-      if atributos.present? && atributos.size > 0
-        atributos.each do |x|
-          if x["name"] =="UPC"
-            upc = x["value"]
-            producto.upc = upc
+      response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+      if response.code == 200 
+        res = JSON.parse response.body
+        puts res
+        atributos = res["localizedAspects"]
+        upc = "no hay UPC"
+        producto = Product.find(params["product_id"].gsub("product_", ""))
+        producto.name = res["title"]
+        producto.current_price = res["price"]["value"]
+        producto.url = url
+        if atributos.present? && atributos.size > 0
+          atributos.each do |x|
+            if x["name"] =="UPC"
+              upc = x["value"]
+              producto.upc = upc
+            end
           end
         end
-      end
-      producto.save
-      if producto.upc.present? 
-        x = producto 
-        costo = Cost.find_by_upc(x.upc)
-        if costo.present? 
-          x.cost = costo.precio_esp.to_f
-          x.gross_margin = x.current_price - costo.precio_esp
-          x.net_margin = (x.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
-          x.roi = ((x.net_margin + x.cost)/x.cost)-1
-          x.save 
+        producto.save
+        if producto.upc.present? 
+          x = producto 
+          costo = Cost.find_by_upc(x.upc)
+          if costo.present? 
+            x.cost = costo.precio_esp.to_f
+            x.gross_margin = x.current_price - costo.precio_esp
+            x.net_margin = (x.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
+            x.roi = ((x.net_margin + x.cost)/x.cost)-1
+            x.save 
+          end
         end
-      end
 
-      salida["UPC"] = upc
+        salida["UPC"] = upc
+      else
+        puts response.code
+        puts response.body
+        salida["error"] = "item no encontrado"
+      end
     else
-      puts response.code
-      puts response.body
-      salida["error"] = "item no encontrado"
+      salida["error"] = "duplicado"
     end
 
 

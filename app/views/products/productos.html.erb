@@ -1,4 +1,4 @@
-<% if params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD') %> 
+<% if (params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD'))  || 2 ==2%> 
 
 <div class="container">
 	<table class="table">
@@ -39,29 +39,6 @@
 	</table>
 </div>
 
-
-<script>
-
-
-	function traerData(product_id){
-    console.log("entramos en traerData ")
-    var url = $('#' + product_id).val();
-    $('#' + product_id).hide();
-    $('#' + product_id.replace("product_", "guardado_")).removeClass("hidden");
-    $.ajax({
-      type:"POST", 
-      url:"<%= url_for traer_data_products_path(:id => 33)%>", 
-      data: { product_id: product_id, url:url, "authenticity_token": AUTH_TOKEN },
-      dataType: 'json',
-      success:function(result){
-        console.log("listo ")
-        console.log(result)
-      }
-    });
-  };
-
-
-</script>
 
 
 <% else %> 

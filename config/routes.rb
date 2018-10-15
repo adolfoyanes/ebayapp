@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get '/token', to: 'ebay_auths#token'
 
     get '/productos', to: 'products#productos'
+    get '/cargar_listings', to: 'products#cargar_listings'
 
 
     ### api 
