@@ -66,7 +66,8 @@ class ProductsController < ApplicationController
         producto.name = res["title"]
         producto.current_price = res["price"]["value"]
         producto.url = url
-        if atributos.present? && atributos.size > 0
+        producto.upc = res["gtin"]
+        if producto.upc.nil? && atributos.present? && atributos.size > 0
           atributos.each do |x|
             if x["name"] =="UPC"
               upc = x["value"]
@@ -76,6 +77,9 @@ class ProductsController < ApplicationController
         end
         producto.average_price = params["precio_tp"]
         producto.average_sold = params["ventas_tp"]
+        if res["estimatedAvailabilities"].present? && res["estimatedAvailabilities"]["estimatedSoldQuantity"].present? 
+          producto.total_sold = res["estimatedAvailabilities"]["estimatedSoldQuantity"]
+        end
         producto.save
         if producto.upc.present? 
           x = producto 
@@ -88,7 +92,6 @@ class ProductsController < ApplicationController
             x.save 
           end
         end
-
         salida["UPC"] = upc
       else
         puts response.code
