@@ -56,6 +56,9 @@ class ProductsController < ApplicationController
       atributos = res["localizedAspects"]
       upc = "no hay UPC"
       producto = Product.find(params["product_id"].gsub("product_", ""))
+      producto.name = res["title"]
+      producto.current_price = res["price"]["value"]
+      producto.url = url
       if atributos.present? && atributos.size > 0
         atributos.each do |x|
           if x["name"] =="UPC"
