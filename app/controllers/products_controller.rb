@@ -39,6 +39,7 @@ class ProductsController < ApplicationController
 
     authorization = EbayAuth.find(1).access_token
 
+    url = params["url"]
     item_id = url.gsub("https://www.ebay.com/itm/-/", "")
     item_id = item_id[0..11]
     url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
