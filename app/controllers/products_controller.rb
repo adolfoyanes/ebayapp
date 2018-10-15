@@ -35,6 +35,12 @@ class ProductsController < ApplicationController
 
     existe = Product.find_by_url(params["url"])
     if existe.nil?
+      producto = Product.new
+      producto.url = params["url"]
+      producto.average_price = params["precio_tp"]
+      producto.average_sold = params["ventas_tp"]
+
+
       ebay_auth = EbayAuth.find(1)
       ## check expiration
       if (Time.now - ebay_auth.updated_at) >= 6600
@@ -62,10 +68,8 @@ class ProductsController < ApplicationController
         atributos = res["localizedAspects"]
         upc = "no hay UPC"
         # producto = Product.find(params["product_id"].gsub("product_", ""))
-        producto = Product.new
         producto.name = res["title"]
         producto.current_price = res["price"]["value"]
-        producto.url = url
         producto.upc = res["gtin"]
         if producto.upc.nil? && atributos.present? && atributos.size > 0
           atributos.each do |x|
@@ -75,28 +79,26 @@ class ProductsController < ApplicationController
             end
           end
         end
-        producto.average_price = params["precio_tp"]
-        producto.average_sold = params["ventas_tp"]
         if res["estimatedAvailabilities"].present? && res["estimatedAvailabilities"][0]["estimatedSoldQuantity"].present? 
           producto.total_sold = res["estimatedAvailabilities"][0]["estimatedSoldQuantity"].to_i
-        end
-        producto.save
-        if producto.upc.present? 
-          x = producto 
-          costo = Cost.find_by_upc(x.upc)
-          if costo.present? 
-            x.cost = costo.precio_esp.to_f
-            x.gross_margin = x.current_price - costo.precio_esp
-            x.net_margin = (x.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
-            x.roi = ((x.net_margin + x.cost)/x.cost)-1
-            x.save 
-          end
         end
         salida["UPC"] = upc
       else
         puts response.code
         puts response.body
         salida["error"] = "item no encontrado"
+      end
+      producto.save
+      if producto.upc.present? 
+        x = producto 
+        costo = Cost.find_by_upc(x.upc)
+        if costo.present? 
+          x.cost = costo.precio_esp.to_f
+          x.gross_margin = x.current_price - costo.precio_esp
+          x.net_margin = (x.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
+          x.roi = ((x.net_margin + x.cost)/x.cost)-1
+          x.save 
+        end
       end
     else
       salida["error"] = "duplicado"
