@@ -39,7 +39,8 @@ class ProductsController < ApplicationController
 
     authorization = EbayAuth.find(1).access_token
 
-    item_id = params["item_id"].to_i
+    item_id = url.gsub("https://www.ebay.com/itm/-/", "")
+    item_id = item_id[0..11]
     url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
     url_base = URI.encode(url_base.strip)
     header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
@@ -65,6 +66,8 @@ class ProductsController < ApplicationController
 
       salida["UPC"] = upc
     else
+      puts response.code
+      puts response.body
       salida["error"] = "item no encontrado"
     end
 

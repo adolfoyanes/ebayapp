@@ -39,10 +39,11 @@
 
 	function traerData(product_id){
     console.log("entramos en traerData ")
+    var url = $('#' + product_id).val();
     $.ajax({
       type:"POST", 
       url:"<%= url_for traer_data_products_path(:id => 33)%>", 
-      data: { product_id: product_id, "authenticity_token": AUTH_TOKEN },
+      data: { product_id: product_id, url:url, "authenticity_token": AUTH_TOKEN },
       dataType: 'json',
       success:function(result){
         console.log("listo ")
