@@ -77,8 +77,8 @@ class ProductsController < ApplicationController
         end
         producto.average_price = params["precio_tp"]
         producto.average_sold = params["ventas_tp"]
-        if res["estimatedAvailabilities"].present? && res["estimatedAvailabilities"]["estimatedSoldQuantity"].present? 
-          producto.total_sold = res["estimatedAvailabilities"]["estimatedSoldQuantity"].to_i
+        if res["estimatedAvailabilities"].present? && res["estimatedAvailabilities"][0]["estimatedSoldQuantity"].present? 
+          producto.total_sold = res["estimatedAvailabilities"][0]["estimatedSoldQuantity"].to_i
         end
         producto.save
         if producto.upc.present? 
