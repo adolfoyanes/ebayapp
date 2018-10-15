@@ -52,6 +52,7 @@ class ProductsController < ApplicationController
     response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
     if response.code == 200 
       res = JSON.parse response.body
+      puts res
       atributos = res["localizedAspects"]
       upc = "no hay UPC"
       producto = Product.find(params["product_id"].gsub("product_", ""))
