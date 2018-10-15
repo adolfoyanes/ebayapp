@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
   end
 
   def productos
-    @products = Product.all
+    @products = Product.all.order(id: :asc)
   end
 
   def traer_data
