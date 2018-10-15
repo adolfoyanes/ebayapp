@@ -5,8 +5,9 @@
 		<thead>
 			<th>URL</th>
 			<th>UPC</th>
+			<th>Ventas Terapeak</th>
 			<th>Precio Actual</th>
-			<!-- <th>Precio Terapeak</th> -->
+			<th>Precio Terapeak</th>
 			<th>Precio LP</th>
 			<th>Margen Bruto</th>
 			<th>Margen Neto</th>
@@ -26,8 +27,9 @@
 					<% end %> 
 					</td>
 					<td><%= p.upc %></td>
+					<th><%= p.average_sold %></th>
 					<th><%= p.current_price %></th>
-					<!-- <th><%#= p.average_price %></th> -->
+					<th><%= p.average_price %></th>
 					<th><%= p.cost %></th>
 					<th><%= p.gross_margin.present? ? p.gross_margin.round(2) : "" %></th>
 					<th><%= p.net_margin.present? ? p.net_margin.round(2) : "" %></th>
