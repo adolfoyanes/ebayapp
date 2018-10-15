@@ -24,9 +24,7 @@
     var url = $('#nuevo_url').val();
     var precio_tp = $('#precio_tp').val();
     var ventas_tp = $('#ventas_tp').val();
-    $('#nuevo_url').val('');
-    $('#precio_tp').val('');
-    $('#ventas_tp').val('');
+    
     $.ajax({
       type:"POST", 
       url:"<%= url_for traer_data_products_path(:id => 33)%>", 
@@ -35,6 +33,9 @@
       success:function(result){
         console.log("listo ")
         console.log(result)
+        $('#nuevo_url').val('');
+        $('#precio_tp').val('');
+        $('#ventas_tp').val('');
       }
     });
   };
