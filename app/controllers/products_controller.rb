@@ -28,7 +28,7 @@ class ProductsController < ApplicationController
   def traer_data
     puts "entramos en traer_data"
     puts params 
-    salida = []
+    salida = {}
     ebay_auth = EbayAuth.find(1)
     ## check expiration
     if (Time.now - ebay_auth.updated_at) >= 6600
