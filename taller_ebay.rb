@@ -69,7 +69,10 @@ To do:
 
 
 2) crear api para q en google script se mande el call al ebayapp y devuelva el upc 
-3) crear funcion en google script para q haga el call y guarde el upc 
+3) crear funcion en google script para q haga el call y guarde el upc  NO SIRVE NO ES ESTABLE
+
+
+3.2) Crear vista con table donde le pegas el url de ebay y se trae la info y te la completa
 4) guardar otros atributos 
 
 

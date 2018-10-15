@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @product.url %>
+</p>
+
+<p>
+  <strong>Upc:</strong>
+  <%= @product.upc %>
+</p>
+
+<p>
+  <strong>Current price:</strong>
+  <%= @product.current_price %>
+</p>
+
+<p>
+  <strong>Average price:</strong>
+  <%= @product.average_price %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @product.cost %>
+</p>
+
+<p>
+  <strong>Gross margin:</strong>
+  <%= @product.gross_margin %>
+</p>
+
+<p>
+  <strong>Net margin:</strong>
+  <%= @product.net_margin %>
+</p>
+
+<p>
+  <strong>Roi:</strong>
+  <%= @product.roi %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Total sold:</strong>
+  <%= @product.total_sold %>
+</p>
+
+<p>
+  <strong>Average sold:</strong>
+  <%= @product.average_sold %>
+</p>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>
