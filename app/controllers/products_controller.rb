@@ -61,7 +61,8 @@ class ProductsController < ApplicationController
         puts res
         atributos = res["localizedAspects"]
         upc = "no hay UPC"
-        producto = Product.find(params["product_id"].gsub("product_", ""))
+        # producto = Product.find(params["product_id"].gsub("product_", ""))
+        producto = Product.new
         producto.name = res["title"]
         producto.current_price = res["price"]["value"]
         producto.url = url
