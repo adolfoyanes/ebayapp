@@ -4,7 +4,7 @@
 			<th>URL</th>
 			<th>UPC</th>
 			<th>Precio Actual</th>
-			<th>Precio Terapeak</th>
+			<!-- <th>Precio Terapeak</th> -->
 			<th>Precio LP</th>
 			<th>Margen Bruto</th>
 			<th>Margen Neto</th>
@@ -14,14 +14,18 @@
 		<tbody>
 			<% @products.each do |p| %> 
 				<tr>
+					<td>
 					<% if p.url.nil? %> 
-						<td><input placeholder="url de la publicacion" id="product_<%= p.id %>" onchange="traerData('product_<%=p.id %>')"></td>
+						
+							<input placeholder="url de la publicacion" id="product_<%= p.id %>" onchange="traerData('product_<%=p.id %>')">
+							<p id="guardado_<%= p.id %>" class="hidden">Guardado!</p>
 					<% else %> 
-						<td><%= p.url %></td>
+						<a href="<%= p.url %>" target="_blank">Ver Publicacion</a>
 					<% end %> 
+					</td>
 					<td><%= p.upc %></td>
 					<th><%= p.current_price %></th>
-					<th><%= p.average_price %></th>
+					<!-- <th><%#= p.average_price %></th> -->
 					<th><%= p.cost %></th>
 					<th><%= p.gross_margin %></th>
 					<th><%= p.net_margin %></th>
@@ -40,6 +44,8 @@
 	function traerData(product_id){
     console.log("entramos en traerData ")
     var url = $('#' + product_id).val();
+    $('#' + product_id).hide();
+    $('#' + product_id.replace("product_", "guardado_")).removeClass("hidden");
     $.ajax({
       type:"POST", 
       url:"<%= url_for traer_data_products_path(:id => 33)%>", 
@@ -48,8 +54,6 @@
       success:function(result){
         console.log("listo ")
         console.log(result)
-        // $('#cantidad_recibida_' + el_id.replace("recibida_", "")).text(valor);
-        // location. reload(true);
       }
     });
   };
