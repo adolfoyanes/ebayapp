@@ -1,5 +1,5 @@
 
-
+<% if (params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD'))%> 
 
 <div class="container">
 	<div>
@@ -31,3 +31,8 @@
 
 
 </script>
+
+<% else %> 
+Acceso no Autorizado 
+
+<% end %> 
