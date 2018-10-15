@@ -2,6 +2,7 @@
 <% if (params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD'))%> 
 
 <div class="container">
+	<h3>Copia y el pega el link de la publicacion de Ebay en este espacio y presiona Enter para guardar</h3>
 	<div>
 		<input id="nuevo_url" onkeypress="if (window.event.keyCode == 13) traerData()">
 	</div>
