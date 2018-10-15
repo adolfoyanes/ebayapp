@@ -25,6 +25,57 @@ class ProductsController < ApplicationController
     @products = Product.all
   end
 
+  def traer_data
+    puts "entramos en traer_data"
+    puts params 
+    salida = []
+    ebay_auth = EbayAuth.find(1)
+    ## check expiration
+    if (Time.now - ebay_auth.updated_at) >= 6600
+      ## refresh token
+      EbayAuth.refrescar_token(1)
+      ebay_auth = EbayAuth.find(1)
+    end
+
+    authorization = EbayAuth.find(1).access_token
+
+    item_id = params["item_id"].to_i
+    url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
+    url_base = URI.encode(url_base.strip)
+    header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
+
+    parametros = {}
+    puts parametros
+
+    response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+    if response.code == 200 
+      res = JSON.parse response.body
+      atributos = res["localizedAspects"]
+      upc = "no hay UPC"
+      producto = Product.find(params["product_id"].gsub("product_", ""))
+      if atributos.present? && atributos.size > 0
+        atributos.each do |x|
+          if x["name"] =="UPC"
+            upc = x["value"]
+            producto.upc = upc
+          end
+        end
+      end
+      producto.save
+
+      salida["UPC"] = upc
+    else
+      salida["error"] = "item no encontrado"
+    end
+
+
+    respond_to do |format|
+      puts "entro en get items"
+      puts salida
+      format.json { render json: salida }
+    end
+  end
+
   # POST /products
   # POST /products.json
   def create

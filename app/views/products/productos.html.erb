@@ -15,7 +15,7 @@
 			<% @products.each do |p| %> 
 				<tr>
 					<% if p.url.nil? %> 
-						<td><input placeholder="url de la publicacion"></td>
+						<td><input placeholder="url de la publicacion" id="product_<%= p.id %>" onchange="traerData('product_<%=p.id %>')"></td>
 					<% else %> 
 						<td><%= p.url %></td>
 					<% end %> 
@@ -32,3 +32,26 @@
 		</tbody>
 	</table>
 </div>
+
+
+<script>
+
+
+	function traerData(product_id){
+    console.log("entramos en traerData ")
+    $.ajax({
+      type:"POST", 
+      url:"<%= url_for traer_data_products_path(:id => 33)%>", 
+      data: { product_id: product_id, "authenticity_token": AUTH_TOKEN },
+      dataType: 'json',
+      success:function(result){
+        console.log("listo ")
+        console.log(result)
+        // $('#cantidad_recibida_' + el_id.replace("recibida_", "")).text(valor);
+        // location. reload(true);
+      }
+    });
+  };
+
+
+</script>
