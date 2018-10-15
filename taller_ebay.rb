@@ -96,7 +96,8 @@ end
 
 10) si ya esta el url entonces no guardar
 11) boton para agregar 100 mas
-12) Paginate
+12) input para que pongas manualmente el precio tp
+13) Paginate
 
 
 
