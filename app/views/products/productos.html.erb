@@ -1,6 +1,9 @@
 <% if (params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD'))%> 
 
 <div class="container">
+
+	<%= link_to 'Cargar Listing', cargar_listings_path(:password => params["password"]) %>
+
 	<table class="table">
 		<thead>
 			<th>URL</th>
