@@ -68,6 +68,17 @@ class ProductsController < ApplicationController
         end
       end
       producto.save
+      if producto.upc.present? 
+        x = producto 
+        costo = Cost.find_by_upc(x.upc)
+        if costo.present? 
+          x.cost = costo.precio_esp.to_f
+          x.gross_margin = x.current_price - costo.precio_esp
+          x.net_margin = (x.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
+          x.roi = ((x.net_margin + x.cost)/x.cost)-1
+          x.save 
+        end
+      end
 
       salida["UPC"] = upc
     else
