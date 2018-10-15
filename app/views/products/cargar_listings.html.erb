@@ -13,7 +13,7 @@
 </div>
 
 <br>
-<%= link_to 'Ver Listado', productos_path %>
+<%= link_to 'Ver Listado', productos_path(:password => params["password"]) %>
 
 
 <script>
@@ -25,6 +25,8 @@
     var precio_tp = $('#precio_tp').val();
     var ventas_tp = $('#ventas_tp').val();
     $('#nuevo_url').val('');
+    $('#precio_tp').val('');
+    $('#ventas_tp').val('');
     $.ajax({
       type:"POST", 
       url:"<%= url_for traer_data_products_path(:id => 33)%>", 
