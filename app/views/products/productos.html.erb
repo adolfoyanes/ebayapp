@@ -29,7 +29,7 @@
 					<th><%= p.cost %></th>
 					<th><%= p.gross_margin.present? ? p.gross_margin.round(2) : "" %></th>
 					<th><%= p.net_margin.present? ? p.net_margin.round(2) : "" %></th>
-					<th><%= p.roi.present? ? 100*p.roi.round(4) : "" %></th>
+					<th><%= p.roi.present? ? 100*p.roi.round(4) : "" %><%= p.roi.present? ? "%" : "" %> </th>
 					<th><%= p.name %></th>
 				</tr>
 			<% end %> 
