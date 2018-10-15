@@ -74,6 +74,8 @@ class ProductsController < ApplicationController
             end
           end
         end
+        producto.average_price = params["precio_tp"]
+        producto.average_sold = params["ventas_tp"]
         producto.save
         if producto.upc.present? 
           x = producto 
