@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :costs do 
+    collection {post :import}
+  end
   resources :products do 
   	collection {post :traer_data}
   end

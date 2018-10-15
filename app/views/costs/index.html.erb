@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Costs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Brand</th>
+      <th>Type</th>
+      <th>Modelo</th>
+      <th>Color</th>
+      <th>Medida</th>
+      <th>Upc</th>
+      <th>Precio esp</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @costs.each do |cost| %>
+      <tr>
+        <td><%= cost.brand %></td>
+        <td><%= cost.category %></td>
+        <td><%= cost.modelo %></td>
+        <td><%= cost.color %></td>
+        <td><%= cost.medida %></td>
+        <td><%= cost.upc %></td>
+        <td><%= cost.precio_esp %></td>
+        <td><%#= link_to 'Show', cost %></td>
+        <td><%#= link_to 'Edit', edit_cost_path(cost) %></td>
+        <td><%#= link_to 'Destroy', cost, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_tag import_costs_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload CSV" %>
+  <% end %>
+
+<br>
+
+<%= link_to 'New Cost', new_cost_path %>
