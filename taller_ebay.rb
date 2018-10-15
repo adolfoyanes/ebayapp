@@ -89,11 +89,14 @@ end
 end
 
 7) cruzar via consola los upc existentes con la lista de precios 
-
-
-
 8) crear password en params 
 9) sacar calculos margen bruto, margen neto y roi 
+
+
+
+10) si ya esta el url entonces no guardar
+11) boton para agregar 100 mas
+12) Paginate
 
 
 
