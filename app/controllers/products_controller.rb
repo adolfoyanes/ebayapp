@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
   end
 
   def productos
+    @products = Product.all
   end
 
   # POST /products
