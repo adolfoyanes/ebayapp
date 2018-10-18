@@ -52,7 +52,7 @@ class ProductsController < ApplicationController
       authorization = EbayAuth.find(1).access_token
 
       url = params["url"]
-      if url es la primera 
+      if url[0..26] == "https://www.ebay.com/itm/-/"
         item_id = url.gsub("https://www.ebay.com/itm/-/", "")
       else
         item_id = url.gsub("http://www.ebay.com/itm/", "")
