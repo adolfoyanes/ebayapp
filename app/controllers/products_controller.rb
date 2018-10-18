@@ -52,7 +52,11 @@ class ProductsController < ApplicationController
       authorization = EbayAuth.find(1).access_token
 
       url = params["url"]
-      item_id = url.gsub("https://www.ebay.com/itm/-/", "")
+      if url es la primera 
+        item_id = url.gsub("https://www.ebay.com/itm/-/", "")
+      else
+        item_id = url.gsub("http://www.ebay.com/itm/", "")
+      end
       item_id = item_id[0..11]
       url_base = "https://api.ebay.com/buy/browse/v1/item/v1|#{item_id}|0"
       url_base = URI.encode(url_base.strip)
