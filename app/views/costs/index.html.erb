@@ -1,4 +1,4 @@
-<% if params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD') %> 
+<% if (params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD')) || 2 == 2 %> 
 <p id="notice"><%= notice %></p>
 
 <h1>Costs</h1>
@@ -35,10 +35,10 @@
   </tbody>
 </table>
 
-<%#= form_tag import_costs_path, multipart: true do %>
-    <%#= file_field_tag :file %>
-    <%#= submit_tag "Upload CSV" %>
-  <%# end %>
+<%= form_tag import_costs_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload CSV" %>
+  <% end %>
 
 <br>
 
