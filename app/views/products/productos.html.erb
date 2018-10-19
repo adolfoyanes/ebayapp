@@ -3,47 +3,57 @@
 <div class="container">
 
 	<%= link_to 'Cargar Listing', cargar_listings_path(:password => params["password"]) %>
-
-	<table class="table">
-		<thead>
-			<th>URL</th>
-			<th>UPC</th>
-			<th>Ventas Terapeak</th>
-			<th>Precio Actual</th>
-			<th>Precio Terapeak</th>
-			<th>Precio LP</th>
-			<th>Margen Bruto</th>
-			<th>Margen Neto</th>
-			<th>ROI %</th>
-			<th>Name</th>
-		</thead>
-		<tbody>
-			<% @products.each do |p| %> 
-				<tr>
-					<td>
-					<% if p.url.nil? %> 
-						
-							<input placeholder="url de la publicacion" id="product_<%= p.id %>" onchange="traerData('product_<%=p.id %>')">
-							<p id="guardado_<%= p.id %>" class="hidden">Guardado!</p>
-					<% else %> 
-						<a href="<%= p.url %>" target="_blank">Ver Publicacion</a>
-					<% end %> 
-					</td>
-					<td><%= p.upc %></td>
-					<th><%= p.average_sold %></th>
-					<th><%= p.current_price %></th>
-					<th><%= p.average_price %></th>
-					<th><%= p.cost %></th>
-					<th><%= p.gross_margin.present? ? p.gross_margin.round(2) : "" %></th>
-					<th><%= p.net_margin.present? ? p.net_margin.round(2) : "" %></th>
-					<th><%= p.roi.present? ? 100*p.roi.round(4) : "" %><%= p.roi.present? ? "%" : "" %> </th>
-					<th><%= p.name %></th>
-				</tr>
-			<% end %> 
-		</tbody>
-	</table>
+	<div class="table-wrapper-scroll-y">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<th>URL</th>
+				<th>UPC</th>
+				<th>Ventas Terapeak</th>
+				<th>Precio Actual</th>
+				<th>Precio Terapeak</th>
+				<th>Precio LP</th>
+				<th>Margen Bruto</th>
+				<th>Margen Neto</th>
+				<th>ROI %</th>
+				<th>Name</th>
+			</thead>
+			<tbody>
+				<% @products.each do |p| %> 
+					<tr>
+						<td>
+						<% if p.url.nil? %> 
+							
+								<input placeholder="url de la publicacion" id="product_<%= p.id %>" onchange="traerData('product_<%=p.id %>')">
+								<p id="guardado_<%= p.id %>" class="hidden">Guardado!</p>
+						<% else %> 
+							<a href="<%= p.url %>" target="_blank">Ver Publicacion</a>
+						<% end %> 
+						</td>
+						<td><%= p.upc %></td>
+						<th><%= p.average_sold %></th>
+						<th><%= p.current_price %></th>
+						<th><%= p.average_price %></th>
+						<th><%= p.cost %></th>
+						<th><%= p.gross_margin.present? ? p.gross_margin.round(2) : "" %></th>
+						<th><%= p.net_margin.present? ? p.net_margin.round(2) : "" %></th>
+						<th><%= p.roi.present? ? 100*p.roi.round(4) : "" %><%= p.roi.present? ? "%" : "" %> </th>
+						<th><%= p.name %></th>
+					</tr>
+				<% end %> 
+			</tbody>
+		</table>
+	</div>
 </div>
 
+
+<style>
+.table-wrapper-scroll-y {
+  display: block;
+  max-height: 200px;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+</style>
 
 
 <% else %> 
