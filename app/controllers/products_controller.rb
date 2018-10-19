@@ -54,6 +54,8 @@ class ProductsController < ApplicationController
       url = params["url"]
       if url[0..26] == "https://www.ebay.com/itm/-/"
         item_id = url.gsub("https://www.ebay.com/itm/-/", "")
+      elsif url[0..24] == "https://www.ebay.com/itm/"
+        item_id = url.gsub("https://www.ebay.com/itm/", "")
       else
         item_id = url.gsub("http://www.ebay.com/itm/", "")
       end
