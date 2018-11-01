@@ -1,0 +1,49 @@
+
+<% if (params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD'))%> 
+
+<div class="container">
+	<h3>Copia y el pega el link de la publicacion de Ebay en este espacio y presiona Enter para guardar</h3>
+	<div>
+		<input id="precio_tp" placeholder="Average Sale Price"> | 
+		<input id="ventas_tp" placeholder="Items Sold"> | 
+		<input id="nuevo_url" onkeypress="if (window.event.keyCode == 13) traerData()" placeholder="https://www.ebay.com...">
+	</div>
+	<div id="status">
+	</div>
+</div>
+
+<br>
+<%= link_to 'Ver Listado', productos_path(:password => params["password"]) %>
+
+
+<script>
+
+
+	function traerData(){
+    console.log("entramos en traerData ")
+    var url = $('#nuevo_url').val();
+    var precio_tp = $('#precio_tp').val();
+    var ventas_tp = $('#ventas_tp').val();
+    
+    $.ajax({
+      type:"POST", 
+      url:"<%= url_for traer_data_products_path(:id => 33)%>", 
+      data: {url:url, precio_tp: precio_tp, ventas_tp: ventas_tp, "authenticity_token": AUTH_TOKEN },
+      dataType: 'json',
+      success:function(result){
+        console.log("listo ")
+        console.log(result)
+        $('#nuevo_url').val('');
+        $('#precio_tp').val('');
+        $('#ventas_tp').val('');
+      }
+    });
+  };
+
+
+</script>
+
+<% else %> 
+Acceso no Autorizado 
+
+<% end %> 

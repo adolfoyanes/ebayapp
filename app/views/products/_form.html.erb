@@ -1,0 +1,72 @@
+<%= form_with(model: product, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% product.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :url %>
+    <%= form.text_field :url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :upc %>
+    <%= form.text_field :upc %>
+  </div>
+
+  <div class="field">
+    <%= form.label :current_price %>
+    <%= form.text_field :current_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :average_price %>
+    <%= form.text_field :average_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cost %>
+    <%= form.text_field :cost %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gross_margin %>
+    <%= form.text_field :gross_margin %>
+  </div>
+
+  <div class="field">
+    <%= form.label :net_margin %>
+    <%= form.text_field :net_margin %>
+  </div>
+
+  <div class="field">
+    <%= form.label :roi %>
+    <%= form.text_field :roi %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_sold %>
+    <%= form.number_field :total_sold %>
+  </div>
+
+  <div class="field">
+    <%= form.label :average_sold %>
+    <%= form.number_field :average_sold %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

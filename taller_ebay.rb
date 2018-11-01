@@ -69,8 +69,36 @@ To do:
 
 
 2) crear api para q en google script se mande el call al ebayapp y devuelva el upc 
-3) crear funcion en google script para q haga el call y guarde el upc 
+3) crear funcion en google script para q haga el call y guarde el upc  NO SIRVE NO ES ESTABLE
+3.2) Crear vista con table donde le pegas el url de ebay y se trae la info y te la completa
 4) guardar otros atributos 
+5) Mejorar vista del url
+5.1) front end muestra q ya se guardo
+6) boton para cargar lista de precios
+
+productos = Product.where("upc is not null")
+productos.each do |x|
+costo = Cost.find_by_upc(x.upc)
+if costo.present? 
+x.cost = costo.precio_esp.to_f
+x.gross_margin = x.current_price - costo.precio_esp
+x.net_margin = (x.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
+x.roi = ((x.net_margin + x.cost)/x.cost)-1
+x.save 
+end
+end
+
+7) cruzar via consola los upc existentes con la lista de precios 
+8) crear password en params 
+9) sacar calculos margen bruto, margen neto y roi 
+
+
+
+10) si ya esta el url entonces no guardar
+11) boton para agregar 100 mas
+12) input para que pongas manualmente el precio tp
+13) Paginate
+
 
 
 

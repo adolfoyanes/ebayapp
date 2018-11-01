@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_14_173104) do
+ActiveRecord::Schema.define(version: 2018_10_15_024232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "costs", force: :cascade do |t|
+    t.string "brand"
+    t.string "category"
+    t.string "modelo"
+    t.string "color"
+    t.string "medida"
+    t.string "upc"
+    t.decimal "precio_esp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "ebay_auths", force: :cascade do |t|
     t.string "user_id"
@@ -21,6 +33,22 @@ ActiveRecord::Schema.define(version: 2018_10_14_173104) do
     t.string "refresh_token"
     t.datetime "expiration"
     t.string "token_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "url"
+    t.string "upc"
+    t.decimal "current_price"
+    t.decimal "average_price"
+    t.decimal "cost"
+    t.decimal "gross_margin"
+    t.decimal "net_margin"
+    t.decimal "roi"
+    t.string "name"
+    t.integer "total_sold"
+    t.integer "average_sold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

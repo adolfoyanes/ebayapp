@@ -1,0 +1,122 @@
+<% if (params["password"].present? && params["password"] == password = ENV.fetch('PASSWORD')) || 2 == 2%> 
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <a href="">Insert Brand / Logo</a>
+</nav>
+<section class="content-area">
+  <div class="table-area">
+
+	<%= link_to 'Cargar Listing', cargar_listings_path(:password => params["password"]) %>
+	<div class="table-wrapper-scroll-y">
+		 <table class="responsive-table table">
+			<thead>
+				<th >URL</th>
+				<th >UPC</th>
+				<th>Ventas Terapeak</th>
+				<th>Precio Actual</th>
+				<th>Precio Terapeak</th>
+				<th>Precio LP</th>
+				<th>Margen Bruto</th>
+				<th>Margen Neto</th>
+				<th>ROI %</th>
+				<th>Name</th>
+			</thead>
+			<tbody>
+				<% @products.each do |p| %> 
+					<tr>
+						<td >
+						<% if p.url.nil? %> 
+							
+								<input placeholder="url de la publicacion" id="product_<%= p.id %>" onchange="traerData('product_<%=p.id %>')">
+								<p id="guardado_<%= p.id %>" class="hidden">Guardado!</p>
+						<% else %> 
+							<a href="<%= p.url %>" target="_blank">Ver Publicacion</a>
+						<% end %> 
+						</td>
+						<td><%= p.upc %></td>
+						<th><%= p.average_sold %></th>
+						<th><%= p.current_price %></th>
+						<th><%= p.average_price %></th>
+						<th><%= p.cost %></th>
+						<th><%= p.gross_margin.present? ? p.gross_margin.round(2) : "" %></th>
+						<th><%= p.net_margin.present? ? p.net_margin.round(2) : "" %></th>
+						<th><%= p.roi.present? ? 100*p.roi.round(4) : "" %><%= p.roi.present? ? "%" : "" %> </th>
+						<th><%= p.name %></th>
+					</tr>
+				<% end %> 
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<style>
+body {
+  padding-top: 50px;
+}
+
+.navbar {
+  height: 50px;
+  padding: 0 15px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+}
+
+.navbar a {
+  color: white;
+  line-height: 3em;
+}
+
+.table-area {
+  position: relative;
+  z-index: 0;
+  margin-top: 50px;
+}
+
+table.responsive-table {
+  display: table;
+  /* required for table-layout to be used (not normally necessary; included for completeness) */
+  table-layout: fixed;
+  /* this keeps your columns with fixed with exactly the right width */
+  width: 100%;
+  /* table must have width set for fixed layout to work as expected */
+  height: 100%;
+}
+
+table.responsive-table thead {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 50px;
+  line-height: 3em;
+  background: #eee;
+  table-layout: fixed;
+  display: table;
+}
+
+table.responsive-table th {
+  background: #eee;
+}
+
+table.responsive-table td {
+  line-height: 2em;
+}
+
+table.responsive-table tr > td,
+table.responsive-table th {
+  text-align: left;
+}
+
+
+
+</style>
+
+
+<% else %> 
+Acceso no autorizado 
+
+<% end %>
