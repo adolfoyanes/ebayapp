@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  frame_width_id: 1
+  frame_color_id: 1
+  model_id: 1
+  lens_color_id: 1
+  name: MyString
+
+two:
+  frame_width_id: 1
+  frame_color_id: 1
+  model_id: 1
+  lens_color_id: 1
+  name: MyString

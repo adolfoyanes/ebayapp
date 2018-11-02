@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Lens Colors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Frame width</th>
+      <th>Frame color</th>
+      <th>Model</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lens_colors.each do |lens_color| %>
+      <tr>
+        <td><%= lens_color.frame_width_id %></td>
+        <td><%= lens_color.frame_color_id %></td>
+        <td><%= lens_color.model_id %></td>
+        <td><%= lens_color.name %></td>
+        <td><%= link_to 'Show', lens_color %></td>
+        <td><%= link_to 'Edit', edit_lens_color_path(lens_color) %></td>
+        <td><%= link_to 'Destroy', lens_color, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lens Color', new_lens_color_path %>

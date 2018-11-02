@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :lens_materials
+  resources :lens_colors
+  resources :frame_colors
+  resources :models
+  resources :frame_widths
   resources :costs do 
     collection {post :import}
   end

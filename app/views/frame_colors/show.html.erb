@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Frame width:</strong>
+  <%= @frame_color.frame_width_id %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @frame_color.model_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @frame_color.name %>
+</p>
+
+<%= link_to 'Edit', edit_frame_color_path(@frame_color) %> |
+<%= link_to 'Back', frame_colors_path %>

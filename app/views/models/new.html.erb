@@ -1,0 +1,34 @@
+<h1>New Model</h1>
+
+<%= render 'form', model: @model %>
+
+
+<br>
+<h1>Models</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Frame width</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @models.each do |model| %>
+      <tr>
+        <td><%= FrameWidth.find(model.frame_width_id).name %></td>
+        <td><%= model.name %></td>
+        <td><%= link_to 'Show', model %></td>
+        <td><%= link_to 'Edit', edit_model_path(model) %></td>
+        <td><%= link_to 'Destroy', model, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<br>
+
+<%= link_to 'Back', models_path %>

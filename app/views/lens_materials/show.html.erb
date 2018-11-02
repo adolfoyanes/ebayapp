@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Frame width:</strong>
+  <%= @lens_material.frame_width_id %>
+</p>
+
+<p>
+  <strong>Frame color:</strong>
+  <%= @lens_material.frame_color_id %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @lens_material.model_id %>
+</p>
+
+<p>
+  <strong>Lens color:</strong>
+  <%= @lens_material.lens_color_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @lens_material.name %>
+</p>
+
+<%= link_to 'Edit', edit_lens_material_path(@lens_material) %> |
+<%= link_to 'Back', lens_materials_path %>

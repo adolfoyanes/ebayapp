@@ -1,0 +1,2 @@
+module FrameWidthsHelper
+end

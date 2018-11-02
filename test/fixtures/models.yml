@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  frame_width_id: 1
+  name: MyString
+
+two:
+  frame_width_id: 1
+  name: MyString

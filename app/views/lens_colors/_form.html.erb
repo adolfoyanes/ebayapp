@@ -1,0 +1,37 @@
+<%= form_with(model: lens_color, local: true) do |form| %>
+  <% if lens_color.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(lens_color.errors.count, "error") %> prohibited this lens_color from being saved:</h2>
+
+      <ul>
+      <% lens_color.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :frame_width_id %>
+    <%= form.number_field :frame_width_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :frame_color_id %>
+    <%= form.number_field :frame_color_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :model_id %>
+    <%= form.number_field :model_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

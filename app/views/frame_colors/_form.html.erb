@@ -1,0 +1,28 @@
+<%= form_with(model: frame_color, local: true) do |form| %>
+  <% if frame_color.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(frame_color.errors.count, "error") %> prohibited this frame_color from being saved:</h2>
+
+      <ul>
+      <% frame_color.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= form.label :model_id %>
+    <%= form.collection_select :model_id, ::Model.all, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

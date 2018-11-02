@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_024232) do
+ActiveRecord::Schema.define(version: 2018_11_01_213415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,46 @@ ActiveRecord::Schema.define(version: 2018_10_15_024232) do
     t.string "refresh_token"
     t.datetime "expiration"
     t.string "token_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "frame_colors", force: :cascade do |t|
+    t.integer "frame_width_id"
+    t.integer "model_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "frame_widths", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lens_colors", force: :cascade do |t|
+    t.integer "frame_width_id"
+    t.integer "frame_color_id"
+    t.integer "model_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lens_materials", force: :cascade do |t|
+    t.integer "frame_width_id"
+    t.integer "frame_color_id"
+    t.integer "model_id"
+    t.integer "lens_color_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "models", force: :cascade do |t|
+    t.integer "frame_width_id"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
