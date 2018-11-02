@@ -47,40 +47,50 @@ class EbayAuth < ApplicationRecord
 			puts "paso el next"
 			puts p.upc
 			next if p.upc.to_i == 0 
-			upc = p.upc
-			url_base = "https://api.ebay.com/buy/browse/v1/item_summary/search?sort=-price&gtin=#{upc}&filter=conditions:{NEW}&limit=100"
-			url_base = URI.encode(url_base.strip)
-			header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
+			ronda = 0
+			for i in 0..1
+				ronda = i
+				upc = p.upc
+				upc = "0" + upc if ronda == 1
+				url_base = "https://api.ebay.com/buy/browse/v1/item_summary/search?sort=-price&gtin=#{upc}&filter=conditions:{NEW}&limit=100"
+				url_base = URI.encode(url_base.strip)
+				header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
 
-			parametros = {}
-			puts parametros
+				parametros = {}
+				puts parametros
 
-			response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
-			res = JSON.parse response.body
+				response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+				res = JSON.parse response.body
 
-			precios = []
-			condiciones = []
-			opciones = []
+				precios = []
+				condiciones = []
+				opciones = []
 
-			if res["total"] > 0 
-				res["itemSummaries"].each do |p|
-					precios << p["price"]["value"].to_f
-					condiciones << p["condition"]
-					opciones << p["buyingOptions"]
+				if res["total"] > 0 
+					res["itemSummaries"].each do |p|
+						precios << p["price"]["value"].to_f
+						condiciones << p["condition"]
+						opciones << p["buyingOptions"]
+					end
+				
+
+					indice = precios.index(precios.min)
+					puts precios
+					puts indice
+					if ronda == 0 || (ronda == 1 && precios[indice] < p.current_price)
+						p.current_price = precios[indice]
+						p.url = res["itemSummaries"][indice]["itemWebUrl"]
+						costo = Cost.find_by_upc(p.upc)
+						if costo.present? 
+							p.cost = costo.precio_esp.to_f
+							p.gross_margin = p.current_price - costo.precio_esp
+							p.net_margin = (p.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
+							p.roi = ((p.net_margin + p.cost)/p.cost)-1
+							p.save 
+						end
+					end
 				end
-			end
-
-			indice = precios.index(precios.min)
-			p.current_price = precios[indice]
-			p.url = res["itemSummaries"][indice]["itemWebUrl"]
-			costo = Cost.find_by_upc(p.upc)
-			if costo.present? 
-				p.cost = costo.precio_esp.to_f
-				p.gross_margin = p.current_price - costo.precio_esp
-				p.net_margin = (p.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
-				p.roi = ((p.net_margin + p.cost)/p.cost)-1
-				p.save 
-			end
+			end ## cierra ronda
 		end
 
 
