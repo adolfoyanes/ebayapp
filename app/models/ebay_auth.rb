@@ -25,4 +25,65 @@ class EbayAuth < ApplicationRecord
 
 	end
 
+	def self.get_by_upc()
+
+
+		ebay_auth = EbayAuth.find(1)
+		if (Time.now - ebay_auth.updated_at) >= 6600
+      ## refresh token
+      EbayAuth.refrescar_token(1)
+      ebay_auth = EbayAuth.find(1)
+    end
+
+    authorization = EbayAuth.find(1).access_token
+
+
+    productos = Product.all
+
+		productos.each do |p|
+
+
+			next if p.upc.nil? 
+			puts "paso el next"
+			puts p.upc
+			next if p.upc.to_i == 0 
+			upc = p.upc
+			url_base = "https://api.ebay.com/buy/browse/v1/item_summary/search?sort=-price&gtin=#{upc}&filter=conditions:{NEW}&limit=100"
+			url_base = URI.encode(url_base.strip)
+			header    = {"Content-Type" => "application/json" ,"Authorization" => "Bearer #{authorization}"}
+
+			parametros = {}
+			puts parametros
+
+			response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
+			res = JSON.parse response.body
+
+			precios = []
+			condiciones = []
+			opciones = []
+
+			if res["total"] > 0 
+				res["itemSummaries"].each do |p|
+					precios << p["price"]["value"].to_f
+					condiciones << p["condition"]
+					opciones << p["buyingOptions"]
+				end
+			end
+
+			indice = precios.index(precios.min)
+			p.current_price = precios[indice]
+			p.url = res["itemSummaries"][indice]["itemWebUrl"]
+			costo = Cost.find_by_upc(p.upc)
+			if costo.present? 
+				p.cost = costo.precio_esp.to_f
+				p.gross_margin = p.current_price - costo.precio_esp
+				p.net_margin = (p.current_price.to_f*0.88)- 5 - costo.precio_esp.to_f
+				p.roi = ((p.net_margin + p.cost)/p.cost)-1
+				p.save 
+			end
+		end
+
+
+	end
+
 end
