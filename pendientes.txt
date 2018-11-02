@@ -1,0 +1,5 @@
+pendientes 
+
+- Crear productos a partir de buscar upc en costs y calcular margenes con precios upc y costos de lista 
+
+

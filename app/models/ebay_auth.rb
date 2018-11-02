@@ -42,7 +42,6 @@ class EbayAuth < ApplicationRecord
 
 		productos.each do |p|
 
-
 			next if p.upc.nil? 
 			puts "paso el next"
 			puts p.upc
@@ -58,7 +57,6 @@ class EbayAuth < ApplicationRecord
 
 				parametros = {}
 				puts parametros
-
 				response = HTTParty.get("#{url_base}", :query => parametros, :headers =>header)
 				res = JSON.parse response.body
 
@@ -72,8 +70,6 @@ class EbayAuth < ApplicationRecord
 						condiciones << p["condition"]
 						opciones << p["buyingOptions"]
 					end
-				
-
 					indice = precios.index(precios.min)
 					puts precios
 					puts indice
