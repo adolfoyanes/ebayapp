@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
   end
 
   def productos
-    @products = Product.all.order(id: :asc)
+    @products = Product.where("roi is not null").order(id: :asc)
   end
 
   def cargar_listings

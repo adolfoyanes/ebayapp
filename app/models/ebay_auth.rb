@@ -65,11 +65,14 @@ class EbayAuth < ApplicationRecord
 				opciones = []
 
 				if res["total"] > 0 
-					res["itemSummaries"].each do |p|
-						precios << p["price"]["value"].to_f
-						condiciones << p["condition"]
-						opciones << p["buyingOptions"]
+					res["itemSummaries"].each do |p| ### OTRA VEZ P
+						if p["conditionId"] == "1000"
+							precios << p["price"]["value"].to_f
+							condiciones << p["condition"]
+							opciones << p["buyingOptions"]
+						end
 					end
+					next if precios.size == 0 
 					indice = precios.index(precios.min)
 					puts precios
 					puts indice
